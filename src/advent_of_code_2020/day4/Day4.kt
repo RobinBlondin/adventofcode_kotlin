@@ -11,9 +11,27 @@ fun main() {
 }
 
 class Day4 {
-    fun readFileToList(path: String): List<String> = File(path).readLines()
+    val expectedFields = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+
+    fun readFileToList(path: String): List<String> {
+        val list: MutableList<String> = ArrayList()
+        val sb: StringBuilder = StringBuilder()
+        File(path).readLines().forEach {
+            if (it.isEmpty()) {
+                list.add(sb.toString())
+                sb.clear()
+            } else sb.append(it).append(" ")
+        }
+        list.add(sb.toString())
+        return list
+    }
 
     fun solutionA(inputList: List<String>): Int {
+
+        inputList.forEach {
+            val arr = it.split(" ")
+            arr.forEach { a -> if (!expectedFields.contains(a.substring(0, 4))  }
+        }
         return 0
     }
 
