@@ -27,12 +27,13 @@ class Day4 {
     }
 
     fun solutionA(inputList: List<String>): Int {
-
-        inputList.forEach {
-            val arr = it.split(" ")
-            arr.forEach { a -> if (!expectedFields.contains(a.substring(0, 4))  }
+        var result = 0
+        inputList.forEach loop@{
+            val arr = it.trim().split(" ")
+            val count = arr.count { a -> expectedFields.contains(a.substring(0, 3))}
+            if (count == expectedFields.size) result++
         }
-        return 0
+        return result
     }
 
     fun solutionB(inputList: List<String>): Int {
