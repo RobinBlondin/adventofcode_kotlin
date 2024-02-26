@@ -12,6 +12,11 @@ fun main() {
 
 class Day4 {
     val expectedFields = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+    val ranges = mapOf("byr" to IntRange(1920, 2002), "iyr" to IntRange(2010, 2020), "eyr" to IntRange(2020, 2030), "hgt" to IntRange(150, 193))
+    val eyeColors = listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
+    fun validColor(color: String): Boolean = "^#\\w{6}\$".toRegex().matches(color)
+    fun validPassId(id: String): Boolean = "^\\d{9}\$".toRegex().matches(id)
+
 
     fun readFileToList(path: String): List<String> {
         val list: MutableList<String> = ArrayList()
@@ -36,7 +41,14 @@ class Day4 {
         return result
     }
 
-    fun solutionB(inputList: List<String>): Int {
-        return 0
+    fun solutionB(inputList: List<String>): Int =
+        inputList.stream().map {
+            it.trim().split(" ").toList().stream().count { a ->
+                val substr = a.substring(0, 3)
+                val number = a.split(":")[1]
+                if(ranges.keys.contains(substr)) {
+
+                }
+            }
+        }
     }
-}
