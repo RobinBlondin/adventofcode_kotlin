@@ -2,33 +2,41 @@ package advent_of_code_2020.day5
 
 
 import java.io.File
+import kotlin.math.ceil
+import kotlin.math.floor
 
 fun main() {
     val day5 = Day5()
 
     val inputList = day5.readFileToList()
+
     println("Solution A: ${day5.solutionA(inputList)}")
     println("Solution B: ${day5.solutionB(inputList)}")
 }
 
+
 class Day5 {
-    fun readFileToList(path: String = "src/advent_of_code_2020/day5/input.txt"): List<String> = File(path).readLines()
-    fun solutionA(list: List<String>): Int {
-        val rowRange = Pair(0, 127)
-        val colRange = Pair(0, 7)
-        list.all loop@{ line ->
-            line.all {
-                when(it) {
-                    'F' -> rowRange.second -= Math.floor((rowRange.second - rowRange.first) / 2).toInt()
-                    'B' -> rowRange.first += Math.ceil((rowRange.second - rowRange.first) / 2).toInt()
-                    'L' -> colRange.second -= Math.floor((colRange.second - colRange.first) / 2).toInt()
-                    else -> colRange.first += Math.ceil((colRange.second - colRange.first) / 2).toInt()
-                }
+    fun readFileToList(path: String = "src/advent_of_code_2020/day5/input.txt"): List<Int> = File(path).readLines()
+        .map { getSeatId(it) }
+        .sorted()
+    private fun getSeatId(code: String): Int {
+        var rowStart = 0.0
+        var rowEnd = 127.0
+        var colStart = 0.0
+        var colEnd = 7.0
+
+        code.forEach {
+            when (it) {
+                'F' -> rowEnd -= floor((((rowEnd - rowStart) / 2)))
+                'B' -> rowStart += ceil(((rowEnd - rowStart) / 2))
+                'L' -> colEnd -= floor((((colEnd - colStart) / 2)))
+                'R' -> colStart += ceil(((colEnd - colStart) / 2))
             }
         }
+        return (rowStart * 8 + colStart).toInt()
     }
-
-    fun solutionB(list: List<String>): Int {
-        return 0;
+    fun solutionA(list: List<Int>): Int = list.max()
+    fun solutionB(list: List<Int>): Int {
+        return list.stream().filter { it + 1 !in list }.toList().first() + 1
     }
- }
+}

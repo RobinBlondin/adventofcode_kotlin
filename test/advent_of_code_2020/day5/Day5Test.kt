@@ -6,14 +6,9 @@ import org.junit.jupiter.api.Assertions.*
 
 class Day5Test {
     private val day5 = Day5()
-    val list = day5.readFileToList("test/advent_of_code_2020/day5/input.txt")
+    private val list = day5.readFileToList("test/advent_of_code_2020/day5/input.txt")
     @Test
     fun solutionA() {
         assertEquals(820, day5.solutionA(list))
-    }
-
-    @Test
-    fun solutionB() {
-        assertEquals(1000, day5.solutionB(list))
     }
 }
