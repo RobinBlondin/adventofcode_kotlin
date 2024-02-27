@@ -9,7 +9,7 @@ class Day2Test {
     @Test
     fun testSolution(): Unit {
         val day2 = Day2()
-        val path = "test/advent_of_code_2020/day2/input.txt"
+        val path = "test/advent_of_code_2020/day2/inputA.txt"
         val inputList = day2.readFileToList(path)
 
         assertEquals(2, day2.solutionA(inputList))
