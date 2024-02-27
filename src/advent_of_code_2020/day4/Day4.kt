@@ -20,7 +20,8 @@ class Day4 {
         "byr" to IntRange(1920, 2002),
         "iyr" to IntRange(2010, 2020),
         "eyr" to IntRange(2020, 2030),
-        "hgt" to IntRange(150, 193))
+        "hgt" to IntRange(150, 193)
+    )
 
     private val eyeColors = listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
     private fun validColor(color: String?): Boolean = "^#\\w{6}\$".toRegex().matches(color.toString())
@@ -43,30 +44,32 @@ class Day4 {
         val mList: MutableList<String> = ArrayList()
         list.forEach { sb ->
             val arr = sb.trim().split(" ")
-            val count = arr.count { expectedFields.contains(it.substring(0, 3))}
+            val count = arr.count { expectedFields.contains(it.substring(0, 3)) }
             if (count != expectedFields.size) return@forEach
-                val color = "hcl:(#[0-9a-f]+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultColor"
-                val eyeColor = "ecl:(\\S+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultEyeColor"
-                val passId = "pid:(\\S+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultPassId"
-                val eyr = "eyr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
-                val iyr = "iyr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
-                val byr = "byr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
-                var height = "(hgt:)(\\d+)(\\D+)".toRegex().find(sb)?.groups?.get(2)?.value?.toDoubleOrNull() ?: 0.0
-                val unit = "(hgt:)(\\d+)(\\w+)".toRegex().find(sb)?.groups?.get(3)?.value ?: "defaultUnit"
 
-                if (unit.contains("in")) {
-                    height *= 2.55
-                }
+            val color = "hcl:(#[0-9a-f]+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultColor"
+            val eyeColor = "ecl:(\\S+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultEyeColor"
+            val passId = "pid:(\\S+)".toRegex().find(sb)?.groups?.get(1)?.value ?: "defaultPassId"
+            val eyr = "eyr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
+            val iyr = "iyr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
+            val byr = "byr:\\S+".toRegex().find(sb)?.value?.split(":") ?: emptyList()
+            var height = "(hgt:)(\\d+)(\\D+)".toRegex().find(sb)?.groups?.get(2)?.value?.toDoubleOrNull() ?: 0.0
+            val unit = "(hgt:)(\\d+)(\\w+)".toRegex().find(sb)?.groups?.get(3)?.value ?: "defaultUnit"
 
-                if (validColor(color) && validPassId(passId) &&
-                    (ranges[eyr[0]]?.contains(eyr[1].toInt()) == true) &&
-                    (ranges[iyr[0]]?.contains(iyr[1].toInt()) == true) &&
-                    (ranges[byr[0]]?.contains(byr[1].toInt()) == true) &&
-                    (ranges["hgt"]?.contains(height.toInt()) == true) &&
-                    (eyeColors.contains(eyeColor))) {
-                    mList.add(sb)
-                }
+            if (unit.contains("in")) {
+                height *= 2.55
             }
+
+            if (validColor(color) && validPassId(passId) &&
+                (ranges[eyr[0]]?.contains(eyr[1].toInt()) == true) &&
+                (ranges[iyr[0]]?.contains(iyr[1].toInt()) == true) &&
+                (ranges[byr[0]]?.contains(byr[1].toInt()) == true) &&
+                (ranges["hgt"]?.contains(height.toInt()) == true) &&
+                (eyeColors.contains(eyeColor))
+            ) {
+                mList.add(sb)
+            }
+        }
         return mList
     }
 
