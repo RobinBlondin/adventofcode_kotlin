@@ -4,16 +4,13 @@ import java.io.File
 
 fun main() {
     val day4 = Day4()
-    val path = "src/advent_of_code_2020/day4/input.txt"
-    val inputList = day4.readFileToList(path)
-    val parsedList = day4.parseList(inputList)
+    val parsedList = day4.parseList()
 
-    println("Solution A: ${day4.solutionA(inputList)}")
+    println("Solution A: ${day4.solutionA()}")
     println("Solution B: ${day4.solutionB(parsedList)}")
-
 }
 
-class Day4 {
+class Day4(private val path: String = "src/advent_of_code_2020/day4/input.txt" ) {
     private val expectedFields = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
     private val ranges = mapOf(
@@ -27,22 +24,16 @@ class Day4 {
     private fun validColor(color: String?): Boolean = "^#\\w{6}\$".toRegex().matches(color.toString())
     private fun validPassId(id: String?): Boolean = "^\\d{9}\$".toRegex().matches(id.toString())
 
-    fun readFileToList(path: String): List<String> {
-        val list: MutableList<String> = ArrayList()
-        val sb: StringBuilder = StringBuilder()
-        File(path).readLines().forEach {
-            if (it.isEmpty()) {
-                list.add(sb.toString())
-                sb.clear()
-            } else sb.append(it).append(" ")
-        }
-        list.add(sb.toString())
-        return list
-    }
+    private val inputList = File(path).readText()
+        .trim()
+        .split("\n\n")
+        .map {it.split(" ", "\n")
+            .joinToString(" ") }
 
-    fun parseList(list: List<String>): List<String> {
+
+    fun parseList(): List<String> {
         val mList: MutableList<String> = ArrayList()
-        list.forEach { sb ->
+        inputList.forEach { sb ->
             val arr = sb.trim().split(" ")
             val count = arr.count { expectedFields.contains(it.substring(0, 3)) }
             if (count != expectedFields.size) return@forEach
@@ -73,7 +64,7 @@ class Day4 {
         return mList
     }
 
-    fun solutionA(inputList: List<String>): Int {
+    fun solutionA(): Int {
         var result = 0
         inputList.forEach loop@{
             val arr = it.trim().split(" ")

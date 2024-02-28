@@ -15,8 +15,8 @@ fun main() {
 }
 
 
-class Day5 {
-    fun readFileToList(path: String = "src/advent_of_code_2020/day5/input.txt"): List<Int> = File(path).readLines()
+class Day5(val path: String = "src/advent_of_code_2020/day5/input.txt") {
+    fun readFileToList(): List<Int> = File(path).readLines()
         .map { getSeatId(it) }
         .sorted()
     private fun getSeatId(code: String): Int {
