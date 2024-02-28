@@ -4,7 +4,7 @@ import java.io.File
 
 class Day6(val path: String = "src/advent_of_code_2020/day6/input.txt") {
 
-    val listOfUniqueYeses = File(path).readText()
+    private val listOfUniqueYeses = File(path).readText()
         .trim()
         .split("\n\n")
         .map {
@@ -16,21 +16,19 @@ class Day6(val path: String = "src/advent_of_code_2020/day6/input.txt") {
         }
         .toList()
 
-    val listOfStrings = File(path).readText()
+
+    private val listOfGroups = File(path).readText()
         .trim()
         .split("\n\n")
         .map { it.split(" ", "\n") }
         .toList()
 
-
     fun solutionA(): Int = listOfUniqueYeses.sumOf { it.size }
+
     fun solutionB(): Int {
-        var count = 0
-        listOfStrings.forEach { list ->
-            list.forEach { element ->
-               element.toCharArray().forEach { a ->
-                   if (element.contains(a)) count++
-               }
+        return listOfUniqueYeses.zip(listOfGroups).sumOf { pair ->
+            pair.first.count { value ->
+                pair.second.all { it.contains(value) }
             }
         }
     }
@@ -38,7 +36,6 @@ class Day6(val path: String = "src/advent_of_code_2020/day6/input.txt") {
 
 fun main() {
     val day6 = Day6()
-
-    println(day6.listOfStrings.forEach{ println(it)})
-    println(day6.solutionB())
+    println("SolutionA: ${day6.solutionA()}")
+    println("SolutionB: ${day6.solutionB()}")
 }
