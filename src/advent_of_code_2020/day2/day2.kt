@@ -9,7 +9,7 @@ fun main() {
     println("Solution B: ${day2.solutionB()}")
 }
 
-class Day2(val path: String = "src/advent_of_code_2020/day2/input.txt") {
+class Day2(path: String = "src/advent_of_code_2020/day2/input.txt") {
     val list = File(path).readLines()
     fun solutionA(): Int = list.count {
         val arr = it.split(": ", " ", "-")

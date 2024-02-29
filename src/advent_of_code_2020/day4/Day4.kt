@@ -10,7 +10,7 @@ fun main() {
     println("Solution B: ${day4.solutionB(parsedList)}")
 }
 
-class Day4(private val path: String = "src/advent_of_code_2020/day4/input.txt" ) {
+class Day4(path: String = "src/advent_of_code_2020/day4/input.txt" ) {
     private val expectedFields = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
     private val ranges = mapOf(

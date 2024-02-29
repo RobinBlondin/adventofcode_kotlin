@@ -2,7 +2,7 @@ package advent_of_code_2020.day6
 
 import java.io.File
 
-class Day6(val path: String = "src/advent_of_code_2020/day6/input.txt") {
+class Day6(path: String = "src/advent_of_code_2020/day6/input.txt") {
 
     private val listOfUniqueYeses = File(path).readText()
         .trim()

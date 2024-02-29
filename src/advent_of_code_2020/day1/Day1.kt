@@ -7,7 +7,7 @@ fun main() {
     println("Solution B: ${day1.solutionB()}")
 }
 
-class Day1(val path: String = "src/advent_of_code_2020/day1/input.txt") {
+class Day1(path: String = "src/advent_of_code_2020/day1/input.txt") {
 
     val list = File(path).readLines().map { it.toInt() }
     fun solutionA(): Int {

@@ -9,7 +9,7 @@ fun main() {
     println("Solution B: ${day3.solutionB()}")
 }
 
-class Day3(val path: String = "src/advent_of_code_2020/day3/input.txt") {
+class Day3(path: String = "src/advent_of_code_2020/day3/input.txt") {
 
     val list = File(path).readLines()
 
