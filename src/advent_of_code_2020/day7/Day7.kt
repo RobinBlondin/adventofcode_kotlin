@@ -2,7 +2,7 @@ package advent_of_code_2020.day7
 
 import java.io.File
 
-class Day7(private val path: String = "src/advent_of_code_2020/day7/input.txt") {
+class Day7(path: String = "src/advent_of_code_2020/day7/input.txt") {
 
     private val bagsThatCanHoldGold = mutableSetOf<String>()
 
