@@ -2,6 +2,13 @@ package advent_of_code_2020.day5
 
 import java.io.File
 
+/*
+    Inspired by KotlinByJetBrains @ YouTube
+
+    I did not notice the similarity to binary code before I saw this video. That's all I needed to hear to create a more
+    concise version than mine.
+ */
+
 val seatIds = File("src/advent_of_code_2020/day5/input.txt").readLines()
     .stream()
     .map{

@@ -1,6 +1,14 @@
 package advent_of_code_2020.day4
 
 import java.io.File
+/*
+    Inspired by KotlinByJetBrains @ YouTube
+
+    The use of a custom Passport class and then using associate to split the strings into a map was way more clever than
+    my way. Also, I learned about the use of companion objects, to basically create a static method in an OOP environment.
+    And the use of WHEN was much more fitting than the regex battle in my solution. The use of toIntOrNull() would
+    have been really helpful in my solution as well.
+ */
 
 val readFileToList = File("src/advent_of_code_2020/day4/input.txt")
     .readText()
