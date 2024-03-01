@@ -8,7 +8,7 @@ import java.io.File
  *  I chose this solution because of the use of a data class that represent a relationship between one parent bag to
  *  one child bag. All bags are added to a set using a parsing function with some clever regex to remove unnecessary data
  *  from the file. The solution for part 1 is filtering out every bag that directly contain a gold bag and then recursively climb
- *  up the three adding every parent to the set, because they indirectly also contain a gold bag. It's much more concise than my
+ *  up the tree adding every parent to the set, because they indirectly also contain a gold bag. It's much more concise than my
  *  method.
  *
  *  The second part solution is basically identical to mine, but Todd's is much cleaner. It filters out the bags where the gold
