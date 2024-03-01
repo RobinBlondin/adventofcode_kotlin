@@ -13,7 +13,7 @@ import java.io.File
  *
  *  The second part solution is basically identical to mine, but Todd's is much cleaner. It filters out the bags where the gold
  *  bag is the parent and then recursively climb down the tree and sum up the total amount of bags that is contained under the gold bag.
- *  Doing this version has taught me more about flatMap, drop and windowed functions. And made recursive function a little bit more clear.
+ *  Doing this version has taught me more about flatMap, drop and windowed functions. And made recursive functions a little bit more clear.
  */
 
 class OtherSolution(path: String = "src/advent_of_code_2020/day7/input.txt") {
