@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class Day4Test {
 
     @Test
-    fun testSolution(): Unit {
+    fun testSolution(){
         val first = Day4("test/advent_of_code_2020/day4/inputA.txt")
         val second1 = Day4("test/advent_of_code_2020/day4/validInputs.txt")
         val second2 = Day4("test/advent_of_code_2020/day4/invalidInputs.txt")
