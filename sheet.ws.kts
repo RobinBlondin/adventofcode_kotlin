@@ -1,3 +1,3 @@
-val list = listOf(35, 20, 15, 25, 47, 40)
+class One(val value:Int, val value2: Int)
 
-println(list.drop(list.size - 1)[0])
+class two(val value:Int): One
