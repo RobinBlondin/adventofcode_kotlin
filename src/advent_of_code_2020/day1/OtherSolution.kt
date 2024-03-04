@@ -3,24 +3,31 @@ package advent_of_code_2020.day1
 import java.io.File
 
 /**
- * Inspired from all other solutions.
+ * Inspired by user Cortinico @ GitHub. https://github.com/cortinico/adventofcode-2020
  *
- * I didnt check a solution for this one, but came back after learning some new tricks during the later days.
+ *  Both parts use a clever way of checking if the difference is in the input, then using the difference to find the
+ *  remaining subtrahend
  */
 
 class OtherSolution(path: String = "src/advent_of_code_2020/day1/input.txt") {
-    val list = File(path).readLines().map { it.toInt() }
+    private val numbers = File(path).readLines().map { it.toInt() }.toSet()
 
-    fun solutionA() = list.flatMap { a ->
-        list.filter { b -> a + b == 2020 } }.reduce {acc, i -> acc * i }
+    fun solutionA() = numbers.first { 2020 - it in numbers }.let { it * (2020 - it) }
 
-    fun solutionB() = list.flatMapIndexed { i, a ->
-        list.drop(i).flatMap { b ->
-            list.filter { c -> a + b + c == 2020 } } }.reduce { acc, i -> acc * i }
+    fun solutionB() = numbers.forEachIndexed  { index1, a ->
+        numbers.forEachIndexed { index2, b ->
+            if (index1 != index2 && 2020 - a - b in numbers) {
+                println( a * b * (2020 - a - b))
+                return
+            }
+        }
+    }
+
+
 }
 
 fun main() {
     val other = OtherSolution()
     println(other.solutionA())
-    println(other.solutionB())
+    other.solutionB()
 }
