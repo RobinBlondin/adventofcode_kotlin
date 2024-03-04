@@ -1,3 +1,3 @@
-class One(val value:Int, val value2: Int)
+val list = listOf(1, 2, 3, 4, 5, 6)
 
-class two(val value:Int): One
+list.map { it }.reduce(Int::times)
