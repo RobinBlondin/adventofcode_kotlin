@@ -7,8 +7,8 @@ typealias Pairs = Pair<String, Int>
 class Day8(path: String = "src/advent_of_code_2020/day8/input.txt") {
     val list: List<Pairs> = File(path).readLines()
         .map { line ->
-            val arr = line.split(" ")
-            Pair(arr[0], arr[1].toInt())
+            val (operation, value) = line.split(" ")
+            Pair(operation, value.toInt())
         }
 
     private val usedOperations = mutableSetOf<Pair<Pairs, Int>>()
