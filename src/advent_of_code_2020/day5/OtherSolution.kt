@@ -6,7 +6,7 @@ import java.io.File
     Inspired by KotlinByJetBrains @ YouTube
 
     I did not notice the similarity to binary code before I saw this video. That's all I needed to hear to create a more
-    concise version than mine.
+    concise version than mine. The toInt(2) convert the string to a BASE2 Int, which means that there only are two digits, 1s and 0s
  */
 
 val seatIds = File("src/advent_of_code_2020/day5/input.txt").readLines()
