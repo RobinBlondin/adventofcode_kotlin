@@ -16,10 +16,11 @@ import java.io.File
  *  the way using the overloaded contains function.
  *
  *  On the second part a list of pairs will be created and for each pair in the list we generate a sequence that counts
- *  how many trees that is encountered and put those values in a list, which we then multiply using the reduce function.
+ *  how many trees that is encountered and put those values in a list, which all gets multiplied together using the
+ *  reduce function.
  *
  *  This solution has definitely opened my eyes towards sequences and my goal is to learn to identify good cases where
- *  to use them. A very clean and concise solution
+ *  to use them.
  */
 
 class OtherSolution(path: String = "src/advent_of_code_2020/day3/input.txt") {
