@@ -1,32 +1,20 @@
 package advent_of_code_2020.day1
+
 import java.io.File
+
+class Day1(path: String = "src/advent_of_code_2020/day1/input.txt") {
+
+    val list = File(path).readLines().map { it.toInt() }
+    fun solutionA() = list.flatMap { first ->
+        list.filter { second -> first + second == 2020 } }.reduce {acc, num -> acc * num }
+
+    fun solutionB() = list.flatMapIndexed { index, first ->
+        list.drop(index).flatMap { second ->
+            list.filter { third -> first + second + third == 2020 } } }.reduce { acc, num -> acc * num }
+}
 
 fun main() {
     val day1 = Day1()
     println("Solution A: ${day1.solutionA()}")
     println("Solution B: ${day1.solutionB()}")
-}
-
-class Day1(path: String = "src/advent_of_code_2020/day1/input.txt") {
-
-    val list = File(path).readLines().map { it.toInt() }
-    fun solutionA(): Int {
-        list.forEach { i ->
-            list.subList(1, list.size).forEach { j ->
-                if (i + j == 2020) return i * j
-            }
-        }
-        return 0
-    }
-
-    fun solutionB(): Int {
-        list.forEach { i ->
-            list.subList(1, list.size).forEach { j ->
-                list.subList(2, list.size).forEach { k ->
-                    if (i + j + k == 2020) return i * j * k
-                }
-            }
-        }
-        return 0
-    }
 }
