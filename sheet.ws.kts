@@ -1,3 +1,3 @@
-val list = listOf(1, 2, 3, 4, 5, 6)
+val pair = Pair(0, 0)
 
-list.map { it }.reduce(Int::times)
+pair.first = 1
