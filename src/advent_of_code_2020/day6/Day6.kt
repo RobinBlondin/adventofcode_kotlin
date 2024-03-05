@@ -14,7 +14,6 @@ class Day6(path: String = "src/advent_of_code_2020/day6/input.txt") {
                 .toCharArray().map { b -> b.toString() }
                 .toSet().toList()
         }
-        .toList()
 
 
     private val listOfGroups = File(path).readText()

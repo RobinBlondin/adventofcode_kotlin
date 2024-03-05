@@ -31,7 +31,8 @@ class Tomteland {
         ("Trötter" to listOf("Skumtomten")),
         ("Skumtomten" to listOf("Dammråttan")),
         ("Räven" to listOf("Gråsuggan", "Myran")),
-        ("Myran" to listOf("Bladlusen")))
+        ("Myran" to listOf("Bladlusen"))
+    )
 
     // current namn är den tomte vars underlydande ni vill ta fram
     //res är listan som håller alla underlydande
@@ -42,13 +43,15 @@ class Tomteland {
         }
         return res
     }
+}
 
     fun main() {
         //Exempel på anrop till den rekursiva funktionen getUnderlings,
         // här är tanken att hitta Tröger underlydande
         //listan fylls på successivt när vi rekurserar
 
+        val tomte = Tomteland()
         val list: MutableList<String> = mutableListOf()
-        println(getUnderlings("Tröger", list))
+        println(tomte.getUnderlings("Tomten", list))
+
     }
-}
