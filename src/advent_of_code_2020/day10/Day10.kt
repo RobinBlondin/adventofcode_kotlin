@@ -13,12 +13,8 @@ class Day10(path: String = "src/advent_of_code_2020/day10/input.txt") {
             val difference = adapterJolts[index] - adapterJolts[index + 1]
             if( difference == 1) one++ else if (difference == 3)three++
         }
-        println(one)
-        println(three)
         return one * three
     }
-
-
 
     fun solutionA() = countDiffs()
     fun solutionB() = 0
