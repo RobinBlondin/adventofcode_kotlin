@@ -5,21 +5,17 @@ import java.io.File
 /**
  * Inspired by Kotlin by JetBrains @ YouTube
  *
- * This solution is very clever. It has a MachineState class designed to contain the accumulated index and sum after operations in the inputList.
- * The Instruction class can hold a MachineState and the Nop, Jmp, and Acc classes inherits from Instruction all with a specific MachineState
- * based on the different types of operations in the input.
- *
- * The Instruction method will parse a string from the inputList and create an Instruction object of the right kind, and we use this function
- * to create a list of instructions.
- *
+ * I chose this solution because of the interesting use of classes and state. But the one thing that caught my eye
+ * were once again the use of sequence. How in part 2 it creates a sequence of every of mutation of the list which
+ * can be used whenever or however. Very clever.
  */
 
 val instructions = File("src/advent_of_code_2020/day8/input.txt").readLines().map { Instruction(it) }
 data class MachineState(val index: Int, val acc: Int)
 sealed class Instruction(val action: (MachineState) -> MachineState)
-class Nop(val value:Int): Instruction( { MachineState(it.index + 1, it.acc) })
-class Jmp(val value:Int): Instruction( { MachineState(it.index + value, it.acc)} )
-class Acc(val value:Int): Instruction( {MachineState(it.index + 1, it.acc + value)} )
+class Nop(val value:Int): Instruction({ MachineState(it.index + 1, it.acc) })
+class Jmp(val value:Int): Instruction({ MachineState(it.index + value, it.acc) })
+class Acc(val value:Int): Instruction({ MachineState(it.index + 1, it.acc + value) })
 
 fun Instruction(input: String): Instruction {
     val (operation, value) = input.split(" ")
