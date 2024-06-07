@@ -10,11 +10,11 @@ class Day1Test {
 
     @Test
     fun solutionA() {
-        assertEquals(day1.solutionA(day1.list), 7)
+        assertEquals(7, day1.solutionA(day1.list))
     }
 
     @Test
     fun solutionB() {
-        assertEquals(day1.solutionB(day1.list), 5)
+        assertEquals(5, day1.solutionB(day1.list))
     }
 }

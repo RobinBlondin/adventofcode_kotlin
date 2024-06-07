@@ -9,11 +9,11 @@ class Day2Test {
     private val day2 = Day2("./test/advent_of_code_2021/day2/input.txt")
     @Test
     fun solutionA() {
-        assertEquals(day2.solutionA(), 150)
+        assertEquals(150, day2.solutionA())
     }
 
     @Test
     fun solutionB() {
-        assertEquals(day2.solutionB(), 900)
+        assertEquals(900, day2.solutionB())
     }
 }
