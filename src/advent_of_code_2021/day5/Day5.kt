@@ -7,7 +7,7 @@ class Day5(path: String = "./src/advent_of_code_2021/day5/input.txt") {
     private val points = input.map {
         Pair(Pair(it[0], it[1]), Pair(it[2], it[3]))
     }
-    var matrix = MutableList(10) {MutableList(10) {0} }
+    private var matrix = List(1000) {MutableList(1000) {0} }
 
 
     fun solutionA(): Int {
@@ -29,16 +29,20 @@ class Day5(path: String = "./src/advent_of_code_2021/day5/input.txt") {
     }
 
     fun solutionB(): Int {
+        matrix = List(1000) { MutableList(1000) {0} }
         for (point in points) {
             val startPoint = point.first
             val endPoint = point.second
 
             var (x, y) = startPoint
-            while(x >= endPoint.first && y <= endPoint.second) {
+            while (x != endPoint.first || y != endPoint.second) {
                 matrix[x][y]++
-                x--
-                y++
+                if (x < endPoint.first) x++
+                else if (x > endPoint.first) x--
+                if (y < endPoint.second) y++
+                else if (y > endPoint.second) y--
             }
+            matrix[x][y]++
         }
         return matrix.sumOf { it.count { number -> number > 1 } }
     }
@@ -46,5 +50,6 @@ class Day5(path: String = "./src/advent_of_code_2021/day5/input.txt") {
 
 fun main() {
     val day5 = Day5()
-    println(day5.solutionA() + day5.solutionB())
+    println("Solution A: ${day5.solutionA()}")
+    println("Solution B: ${day5.solutionB()}")
 }
