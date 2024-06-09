@@ -13,6 +13,6 @@ class Day6Test {
 
     @Test
     fun solutionB_shouldReturnTestInputAnswer() {
-        assertEquals(0, day6.solutionB())
+        assertEquals(26984457539, day6.solutionB())
     }
 }
