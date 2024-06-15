@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 class Day2Test {
-    val day2 = Day2("./test/advent_of_code_2019/day2/input.txt")
+    private val day2 = Day2("./test/advent_of_code_2019/day2/input.txt")
     @Test
     fun testAddOperation() {
         val inputCopy = day2.input.toMutableList()

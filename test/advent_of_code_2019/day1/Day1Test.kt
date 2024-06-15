@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 class Day1Test {
-    val day1 = Day1("./test/advent_of_code_2019/day1/input.txt")
+    private val day1 = Day1("./test/advent_of_code_2019/day1/input.txt")
     @Test
     fun solutionA() {
         assertEquals(34241, day1.solutionA())
