@@ -4,44 +4,27 @@ import java.io.File
 import kotlin.math.absoluteValue
 
 class Day1(path: String = "./src/advent_of_code_2024/day1/input.txt") {
-    val input = File(path).readLines().map {
-        it.replace("\\s+".toRegex(), "-")
-          .split("-")
-          .map { num -> num.toInt() }
+    private val pairOfLists: Pair<List<Long>, List<Long>> = File(path)
+        .readLines()
+        .map { it.split("\\s+".toRegex()).map { num -> num.toLong() } }
+        .flatten()
+        .splitAndSort()
+
+    fun solutionA(): Long = pairOfLists.first.withIndex().sumOf { (index, num) ->
+            val num2 = pairOfLists.second[index]
+            (num - num2).absoluteValue
     }
 
-    private val rotatedAndSorted = rotateMatrix(input).sortEach()
-
-    fun solutionA(): Long {
-        var sum = 0L
-        rotatedAndSorted.first().forEachIndexed { index, num ->
-            val num2 = rotatedAndSorted.last()[index]
-            sum += (num - num2).absoluteValue
-        }
-        return sum
+    fun solutionB(): Long = pairOfLists.first.sumOf { num ->
+        val countInRightList = pairOfLists.second.count { num2 -> num == num2 }
+        num *  countInRightList
     }
 
-    fun solutionB(): Long {
-        var sum = 0L
-        rotatedAndSorted.first().forEach { num ->
-            val amountOfTimesInRightList = rotatedAndSorted.last().count {
-                num2 -> num == num2
-            }
+    private fun List<Long>.splitAndSort(): Pair<List<Long>, List<Long>> {
+        val first = this.filterIndexed { index, _ -> index % 2 == 0 }.sorted()
+        val second = this.filterIndexed { index, _ -> index % 2 != 0 }.sorted()
 
-            sum += num * amountOfTimesInRightList
-        }
-        return sum
-    }
-
-    private fun rotateMatrix(list: List<List<Int>>): List<List<Int>> {
-        val first = list.flatten().filterIndexed { index, _ -> index % 2 == 0 }
-        val second = list.flatten().filterIndexed { index, _ -> index % 2 != 0 }
-
-        return listOf(first, second)
-    }
-
-    private fun List<List<Int>>.sortEach(): List<List<Int>> {
-        return this.map { it.sorted() }.toList()
+        return Pair(first, second)
     }
 }
 
