@@ -10,15 +10,18 @@ class Day1(path: String = "./src/advent_of_code_2024/day1/input.txt") {
         .flatten()
         .splitAndSort()
 
-    fun solutionA(): Long = pairOfLists.first.withIndex().sumOf { (index, num) ->
+    fun solutionA(): Long = pairOfLists.first
+        .withIndex()
+        .sumOf { (index, num) ->
             val num2 = pairOfLists.second[index]
             (num - num2).absoluteValue
-    }
+        }
 
-    fun solutionB(): Long = pairOfLists.first.sumOf { num ->
-        val countInRightList = pairOfLists.second.count { num2 -> num == num2 }
-        num *  countInRightList
-    }
+    fun solutionB(): Long = pairOfLists.first
+        .sumOf { num ->
+            val countInRightList = pairOfLists.second.count { num2 -> num == num2 }
+            num * countInRightList
+        }
 
     private fun List<Long>.splitAndSort(): Pair<List<Long>, List<Long>> {
         val first = this.filterIndexed { index, _ -> index % 2 == 0 }.sorted()
