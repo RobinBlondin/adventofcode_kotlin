@@ -4,31 +4,23 @@ import java.io.File
 import kotlin.math.absoluteValue
 
 class Day1(path: String = "./src/advent_of_code_2024/day1/input.txt") {
-    private val pairOfLists: Pair<List<Long>, List<Long>> = File(path)
+    private val input = File(path)
         .readLines()
-        .map { it.split("\\s+".toRegex()).map { num -> num.toLong() } }
-        .flatten()
-        .splitAndSort()
-
-    fun solutionA(): Long = pairOfLists.first
-        .withIndex()
-        .sumOf { (index, num) ->
-            val num2 = pairOfLists.second[index]
-            (num - num2).absoluteValue
+        .map {
+            val (first, second) = it.split("\\s+".toRegex()).map { num -> num.toInt() }
+            Pair(first, second)
         }
 
-    fun solutionB(): Long = pairOfLists.first
-        .sumOf { num ->
-            val countInRightList = pairOfLists.second.count { num2 -> num == num2 }
+    private val left = input.map { it.first }.sorted()
+    private val right = input.map { it.second }.sorted()
+
+    fun solutionA(): Int = left.zip(right)
+        .sumOf { (it.first - it.second).absoluteValue }
+
+    fun solutionB(): Int = left.sumOf { num ->
+            val countInRightList = right.count { num2 -> num == num2 }
             num * countInRightList
         }
-
-    private fun List<Long>.splitAndSort(): Pair<List<Long>, List<Long>> {
-        val first = this.filterIndexed { index, _ -> index % 2 == 0 }.sorted()
-        val second = this.filterIndexed { index, _ -> index % 2 != 0 }.sorted()
-
-        return Pair(first, second)
-    }
 }
 
 fun main() {
