@@ -1,11 +1,8 @@
-val mutable = mutableListOf(1, 2, 3, 4, 8, 20)
+val str = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\n\n"
 
-for((index, element) in mutable.withIndex()) {
-    if (mutable[index + 3] - element <= 3) {
-        for (i in 1..2) mutable.removeAt(index + i)
-    }
-    println("""
-        Index: $index
-        Element: $element
-    """.trimIndent())
-}
+val pattern = "do\\(\\)".toRegex()
+pattern.containsMatchIn(str)
+
+
+pattern.findAll(str).map { matchResult -> matchResult.value.replace("mul(", "").replace(")", "").split(",") }.toList()
+
