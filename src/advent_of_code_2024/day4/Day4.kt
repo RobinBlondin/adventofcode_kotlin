@@ -19,8 +19,7 @@ class Day4(path: String = "./src/advent_of_code_2024/day4/input.txt") {
         var sum = 0
         for(y in input.indices) {
             for(x in input[y].indices) {
-                val current = input[y][x]
-                if(current == "A") {
+                if(input[y][x] == "A") {
                     sum += xmasChecker(x, y)
                 }
             }
