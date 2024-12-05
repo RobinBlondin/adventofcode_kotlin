@@ -1,8 +1,7 @@
-val str = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\n\n"
+val matrix = listOf(
+    listOf('x', 'x', 'y', 'y', 'z'),
+    listOf('a', 'b', 'c', 'd', 'e'),
+    listOf('a', 'b', 'c', 'd', 'e'),
+)
 
-val pattern = "do\\(\\)".toRegex()
-pattern.containsMatchIn(str)
-
-
-pattern.findAll(str).map { matchResult -> matchResult.value.replace("mul(", "").replace(")", "").split(",") }.toList()
-
+val bool = matrix[-1]
