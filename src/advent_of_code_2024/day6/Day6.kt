@@ -8,9 +8,26 @@ class Day6(path: String = "./src/advent_of_code_2024/day6/input.txt") {
     private val startingPoint = setStartingPoint()
 
     fun solutionA(): Int = mapPatrolPath()
-    
+
     fun solutionB(): Int {
-        return 0
+        var count = 0
+        input.forEachIndexed { i, row ->
+            row.forEachIndexed { j, cell ->
+                if (cell == '.') {
+                    input[i][j] = '#'
+
+
+                    val result = mapPatrolPath()
+                    if (result == -1) {
+                        count++
+
+                    }
+
+                    input[i][j] = '.'
+                }
+            }
+        }
+        return count
     }
 
     private fun mapPatrolPath(): Int {
@@ -18,8 +35,13 @@ class Day6(path: String = "./src/advent_of_code_2024/day6/input.txt") {
         val visited = mutableSetOf(startingPoint)
         var currentPoint = startingPoint
         var direction = Direction.NORTH
+        var visitedCounter = 0
 
         while(!isNextMoveOutOfBounds(currentPoint,direction)) {
+
+            if(visitedCounter == 1000000) {
+                return -1
+            }
 
             direction = if(isNextMoveObstruction(currentPoint, direction)) nextDirection(direction) else direction
 
@@ -29,7 +51,14 @@ class Day6(path: String = "./src/advent_of_code_2024/day6/input.txt") {
                 Direction.EAST -> Pair(currentPoint.first, currentPoint.second + 1)
                 else -> Pair(currentPoint.first, currentPoint.second - 1)
             }
-            visited.add(currentPoint)
+
+            if(visited.contains(currentPoint)) {
+                visitedCounter++
+            } else {
+                visitedCounter = 0
+                visited.add(currentPoint)
+            }
+
         }
 
         return visited.size
