@@ -9,5 +9,6 @@ enum class Direction {
     NORTHWEST,
     SOUTHEAST,
     SOUTHWEST,
-    ALL
+    ALL,
+    NONE
 }
