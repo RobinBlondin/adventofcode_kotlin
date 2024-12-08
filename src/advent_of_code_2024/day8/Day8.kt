@@ -8,48 +8,46 @@ class Day8(path: String = "./src/advent_of_code_2024/day8/input.txt") {
     val input = File(path).readLines().map { it.toCharArray() }
 
     fun solutionA(): Int {
-        val map = collectAntennaPoints()
-        val input = input.map { it.copyOf() }.toMutableList()
+        val workingInput = input.map { it.copyOf() }.toMutableList()
 
-        map.values.forEach { value ->
-            value.forEach { point ->
-                val filtered = value.filter { it != point }
-                filtered.forEach { p ->
-                    val counterPoint = point.getCounterPoint(p)
-                    if(!isOutOfBounds(counterPoint)) {
-                        input[counterPoint.first][counterPoint.second] = '#'
-                    }
-                }
+        processAntennaPoints { point, otherPoint, _ ->
+            val counterPoint = point.getCounterPoint(otherPoint)
+            if (!isOutOfBounds(counterPoint)) {
+                workingInput[counterPoint.first][counterPoint.second] = MARKED
             }
         }
-        return input.sumOf { it.count { c -> c == '#' } }
+
+        return workingInput.sumOf { it.count { c -> c == MARKED } }
     }
 
     fun solutionB(): Int {
-        val map = collectAntennaPoints()
+        val workingInput = input.map { it.copyOf() }.toMutableList()
 
-        map.values.forEach { value ->
-            value.forEach { point ->
-                val filtered = value.filter { it != point }
+        processAntennaPoints { point, _, diff ->
+                var current = point
+                while (!isOutOfBounds(current)) {
+                    workingInput[current.first][current.second] = MARKED
+                    current = Pair(current.first + diff.first, current.second + diff.second)
+            }
+        }
 
-                filtered.forEach { p ->
-                    val diff = point.getDiffPoint(p)
-                    var current = point
+        return workingInput.sumOf { it.count { c -> c != EMPTY } }
+    }
 
-                    while(true) {
-                        current = Pair(current.first + diff.first, current.second + diff.second)
-                        if(isOutOfBounds(current)) {
-                            break
-                        }
-                        input[current.first][current.second] = 'X'
-                    }
+    private fun processAntennaPoints(
+        action: (point: Pair<Int, Int>, otherPoint: Pair<Int, Int>, diff: Pair<Int, Int>) -> Unit
+    ) {
+        findAntennaPoints().values.forEach { antennaGroup ->
+            antennaGroup.forEach { point ->
+                antennaGroup.filter { it != point }.forEach { otherPoint ->
+                    val diff = point.getDiffPoint(otherPoint)
+                    action(point, otherPoint, diff,)
                 }
             }
         }
-        return input.sumOf { it.count { c -> c != '.' } }
     }
 
-    private fun collectAntennaPoints(): Map<Char, Set<Pair<Int, Int>>> {
+    private fun findAntennaPoints(): Map<Char, Set<Pair<Int, Int>>> {
         val map = mutableMapOf<Char, MutableSet<Pair<Int, Int>>>()
         for(i in input.indices) {
             for (j in input[i].indices) {
@@ -67,13 +65,17 @@ class Day8(path: String = "./src/advent_of_code_2024/day8/input.txt") {
     }
 
     private fun Pair<Int, Int>.getCounterPoint(other: Pair<Int, Int>): Pair<Int, Int> {
-        return Pair((this.first + ( this.first - other.first)), (this.second + (this.second - other.second)))
+        return Pair(this.first * 2 - other.first, this.second * 2 - other.second)
     }
 
     private fun Pair<Int, Int>.getDiffPoint(other: Pair<Int, Int>): Pair<Int, Int> {
         return Pair((this.first - other.first), (this.second - other.second))
     }
 
+    companion object {
+        const val EMPTY = '.'
+        const val MARKED = '#'
+    }
 }
 
 fun main() {
