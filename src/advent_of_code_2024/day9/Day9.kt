@@ -8,14 +8,20 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
 
     fun solutionA(): Long {
         var count = 0L
-        val list = organizeInput()
+        val list = organizeA()
         list.forEachIndexed { index, s -> count += index * s.toInt() }
         return count
     }
 
-    fun solutionB(): Int {
-        println(countSpaceLength())
-        return 0
+    fun solutionB(): Long {
+        var count = 0L
+        val list = organizeB()
+        list.forEachIndexed() { index, s ->
+            if (s != ".") {
+                count += index * s.toInt()
+            }
+        }
+        return count
     }
 
     private fun processInput(): Array<String> {
@@ -39,7 +45,7 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
         return list.toTypedArray()
     }
 
-    private fun organizeInput(): List<String> {
+    private fun organizeA(): List<String> {
         val processedInput = processInput()
 
         for (i in processedInput.size - 1 downTo 0) {
@@ -57,51 +63,52 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
         return processedInput.filter { it != "." }
     }
 
-    fun countFileLengths(): List<Int> {
-        val files = processInput()
-        val result = mutableListOf<Int>()
+    private fun groupCharacters(input: String): MutableList<CharArray> {
+        val regex = "(.)\\1*".toRegex()
+        return regex.findAll(input)
+            .map { match -> match.value.toCharArray() }
+            .toMutableList()
+    }
 
-        var count = 0
-        var current = files[0]
-        for (i in files.indices) {
-            if (files[i] != current && files[i] != ".") {
-                result.add(count)
-                count = 0
-                current = files[i]
-                count++
-            } else if (i == files.size - 1) {
-                count++
-                result.add(count)
-            } else if (files[i] != ".") {
-                count++
+    fun organizeB(): List<String> {
+        val input = processInput().joinToString("").trim()
+        var groups = groupCharacters(input)
+
+        for(i in  groups.indices.reversed()) {
+            if(groups.subList(0, i + 1).none { it.contains('.') }) break
+            val spaces = groups.indexOfFirst { it.contains('.') && it.size >= groups[i].size }
+
+            if(spaces == -1) continue
+
+            if(spaces > i) {
+                continue
             }
-        }
-        println(result)
-        return result.reversed()
-    }
 
-    fun countSpaceLength(): List<Int> {
-        return processInput().joinToString("").split("\\w+".toRegex()).map { it.length }.filter { it > 0 }
-    }
-
-    fun processInputB(): Array<String> {
-        val files = processInput()
-        val fileLengths = countFileLengths()
-        val spaceLengths = countSpaceLength()
-
-        fileLengths.forEachIndexed { index, s ->
-            if(s <= spaceLengths[index]) {
-                files.
+            if(groups[i].contains('.')) {
+                continue;
             }
+
+            switchCharacters(groups[spaces], groups[i])
+
+            groups = groupCharacters(groups.joinToString("") { it.joinToString("") })
+
         }
+        return groups.flatMap { arr -> arr.map { ch -> ch.toString() } }
+
     }
 
+    private fun switchCharacters(spaces: CharArray, group: CharArray) {
+        for(i in group.indices) {
+            spaces[i] = group[i]
+            group[i] = '.'
+        }
+    }
 
 }
 
-fun main() {
-    val day9 = Day9()
+    fun main() {
+        val day9 = Day9()
 
-    println("SolutionA: ${day9.solutionA()}")
-    println("SolutionB: ${day9.solutionB()}")
-}
+        println("SolutionA: ${day9.solutionA()}")
+        println("SolutionB: ${day9.solutionB()}")
+    }
