@@ -59,12 +59,11 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
                 processedInput[spaceIndex] = processedInput[i]
                 processedInput[i] = '.'
             }
-
         }
         return processedInput.filter { it != '.' }
     }
 
-    fun groupCharacters(input: String): List<CharArray> {
+    private fun groupCharacters(input: String): List<CharArray> {
         if (input.isEmpty()) return emptyList()
 
         val result = mutableListOf<String>()
@@ -101,7 +100,7 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
             switchCharacters(groups[spaces], groups[index])
             groups = groupCharacters(groups.joinToString("") { it.joinToString("") })
             val diff = before - groups.size
-            if(diff == 2) index--
+            if(diff == 2) index-=2 else if (diff == 1) index--
         }
         return groups.flatMap { arr -> arr.map { ch -> ch } }
     }
@@ -113,14 +112,14 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
         }
     }
 
-    fun encodeNumber(number: Int): Char {
+    private fun encodeNumber(number: Int): Char {
         val baseOffset = 0x4E00
         val maxOffset = 0x9FFF
         val charCode = baseOffset + number
         return if (charCode in baseOffset..maxOffset) charCode.toChar() else ' '
     }
 
-    fun decodeChar(encoded: Char): Int {
+    private fun decodeChar(encoded: Char): Int {
         val baseOffset = 0x4E00
         return encoded.code - baseOffset
     }
