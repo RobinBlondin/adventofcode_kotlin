@@ -3,13 +3,13 @@ package advent_of_code_2024.day10
 import java.io.File
 
 class Day10(path: String = "./src/advent_of_code_2024/day10/input.txt") {
-    val input = File(path).readLines().map { it.toCharArray().map { ch -> ch.digitToInt() }.toList() }
-    val set = mutableSetOf<Pair<Int, Int>>()
-    var sum = 0
+    private val input = File(path).readLines().map { it.toCharArray().map { ch -> ch.digitToInt() }.toList() }
+    private val trailheads = mutableSetOf<Pair<Int, Int>>()
+    private var totalTrails = 0
 
-    fun solutionA(): Int = countTrails(set)
+    fun solutionA(): Int = countTrails(trailheads)
 
-    fun solutionB(): Int = sum
+    fun solutionB(): Int = totalTrails
 
     private fun <T> countTrails(set: MutableSet<T>): Int {
         var sum = 0
@@ -27,8 +27,8 @@ class Day10(path: String = "./src/advent_of_code_2024/day10/input.txt") {
 
     private fun findAllTrails(current: Pair<Int, Int>) {
         if (input[current.first][current.second] == 9) {
-            set.add(current)
-            sum++
+            trailheads.add(current)
+            totalTrails++
             return
         }
 
