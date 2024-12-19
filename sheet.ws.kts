@@ -12,3 +12,7 @@ fun decodeChar(encoded: Char): Int {
     val baseOffset = 0x4E00
     return encoded.code - baseOffset
 }
+val num = "123456"
+val (left, right) = num.chunked(num.length / 2)
+println(left)
+println(right)
