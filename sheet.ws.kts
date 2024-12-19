@@ -1,12 +1,24 @@
-fun Pair<Int, Int>.getDiffPoint(other: Pair<Int, Int>): Pair<Int, Int> {
-    return Pair((this.first - other.first), (this.second - other.second))
+fun encodeNumber(number: Int): Char {
+    val baseOffset = 0x4E00
+    val maxOffset = 0x9FFF
+    val charCode = baseOffset + number
+    return if (charCode in baseOffset..maxOffset) charCode.toChar() else {
+        println("error zone")
+        ' '
+    }
 }
 
-val pair = Pair(1, 8)
-pair.getDiffPoint(Pair(2, 5))
+fun decodeChar(encoded: Char): Int {
+    val baseOffset = 0x4E00
+    return encoded.code - baseOffset
+}
 
-val list = listOf(10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 11)
+val num = 6349492251099
+          6349485688066
 
-val list2 = list.takeLast(4)
 
-println(list.indexOfLast { it == 10 })
+"11....22..333..444.." 8
+ 0  1  2  3 4  5 6 7
+
+11444.22..333....... 7
+0  1 2 3    4     5   6
