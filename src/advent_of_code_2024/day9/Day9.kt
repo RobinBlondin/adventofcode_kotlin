@@ -7,14 +7,14 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
 
     fun solutionA(): Long {
         var count = 0L
-        val list = organizeA()
+        val list = realignCharacters()
         list.forEachIndexed { index, s -> count += index * decodeChar(s) }
         return count
     }
 
     fun solutionB(): Long {
         var count = 0L
-        val list = organizeB()
+        val list = realignFiles()
         println(list)
         list.forEachIndexed { index, s ->
             if (s != '.') {
@@ -46,7 +46,7 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
         return list.toTypedArray()
     }
 
-    private fun organizeA(): List<Char> {
+    private fun realignCharacters(): List<Char> {
         val processedInput = processInput()
 
         for (i in processedInput.size - 1 downTo 0) {
@@ -63,27 +63,7 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
         return processedInput.filter { it != '.' }
     }
 
-    private fun groupCharacters(input: String): List<CharArray> {
-        if (input.isEmpty()) return emptyList()
-
-        val result = mutableListOf<String>()
-        var currentGroup = StringBuilder(input[0].toString())
-
-        for (i in 1 until input.length) {
-            if (input[i] == input[i - 1]) {
-                currentGroup.append(input[i])
-            } else {
-                result.add(currentGroup.toString())
-                currentGroup = StringBuilder(input[i].toString())
-            }
-        }
-        result.add(currentGroup.toString())
-
-        return result.map { it.toCharArray() }
-    }
-
-
-    private fun organizeB(): List<Char> {
+    private fun realignFiles(): List<Char> {
         val input = processInput().joinToString("")
         var groups = groupCharacters(input)
 
@@ -96,14 +76,19 @@ class Day9(path: String = "./src/advent_of_code_2024/day9/input.txt") {
                 index--
                 continue
             }
-            val before = groups.size
+            val initialSize = groups.size
             switchCharacters(groups[spaces], groups[index])
             groups = groupCharacters(groups.joinToString("") { it.joinToString("") })
-            val diff = before - groups.size
-            if(diff == 2) index-=2 else if (diff == 1) index--
+
+            val sizeDifference = initialSize - groups.size
+            index -= sizeDifference
         }
         return groups.flatMap { arr -> arr.map { ch -> ch } }
     }
+
+    private fun groupCharacters(input: String): List<CharArray> =
+        "(.)\\1*".toRegex().findAll(input).map { it.value.toCharArray() }.toList()
+
 
     private fun switchCharacters(spaces: CharArray, group: CharArray) {
         for (i in group.indices) {
