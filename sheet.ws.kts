@@ -12,13 +12,3 @@ fun decodeChar(encoded: Char): Int {
     val baseOffset = 0x4E00
     return encoded.code - baseOffset
 }
-
-val num = 6349492251099
-          6349485688066
-
-
-"11....22..333..444.." 8
- 0  1  2  3 4  5 6 7
-
-11444.22..333....... 7
-0  1 2 3    4     5   6
